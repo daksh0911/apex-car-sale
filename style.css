@@ -1280,7 +1280,7 @@ html.lenis, html.lenis body {
   align-items: center;
   text-align: center;
   padding: 3rem 2rem;
-}  box-shadow: inset 0 0 60px rgba(0,0,0,0.85);
+  box-shadow: inset 0 0 60px rgba(0,0,0,0.85);
 }
 
 .page-cover::before {
@@ -1857,10 +1857,24 @@ select.atelier-select:focus,
 
   /* Mobile Slide-Out Navigation Drawer */
   .mobile-nav-drawer {
+    position: fixed;
+    inset: 0;
     z-index: 9999;
   }
 
+  .mobile-nav-drawer .mobile-nav-backdrop {
+    position: absolute;
+    inset: 0;
+  }
+
   .mobile-nav-drawer .mobile-nav-content {
+    position: absolute;
+    top: 4rem;
+    right: 0;
+    bottom: 0;
+    width: min(18rem, 85vw);
+    max-width: 85vw;
+    overflow-y: auto;
     animation: drawerSlideIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
