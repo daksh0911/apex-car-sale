@@ -100,8 +100,66 @@
       <a href="#purchase-section" class="btn-primary-apex px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs uppercase tracking-wider font-bold whitespace-nowrap">
         Acquire
       </a>
+
+      <!-- Mobile Hamburger Drawer Toggle Button -->
+      <button type="button" id="mobile-menu-toggle" aria-label="Toggle navigation menu" onclick="window.apexApp.toggleMobileMenu()" class="xl:hidden w-8 h-8 rounded-full bg-zinc-900/90 border border-white/[0.12] flex items-center justify-center text-zinc-300 hover:text-white hover:border-amber-400/50 transition-colors">
+        <svg class="w-4 h-4 menu-icon-open" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg class="w-4 h-4 menu-icon-close hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
     </div>
   </header>
+
+  <!-- MOBILE NAVIGATION SLIDE-OUT DRAWER -->
+  <div id="mobile-nav-drawer" class="mobile-nav-drawer hidden fixed inset-0 z-40">
+    <div class="mobile-nav-backdrop fixed inset-0 bg-black/80 backdrop-blur-md" onclick="window.apexApp.closeMobileMenu()"></div>
+    <div class="mobile-nav-content fixed top-16 right-0 bottom-0 w-72 max-w-[85vw] bg-[#0e0e12] border-l border-white/[0.1] shadow-2xl p-6 flex flex-col justify-between overflow-y-auto z-50">
+      <div class="space-y-6">
+        <div class="flex items-center justify-between pb-4 border-b border-white/[0.08]">
+          <span class="text-[10px] font-mono uppercase tracking-widest text-amber-400 font-bold">Navigation // Folio</span>
+          <span class="text-[10px] font-mono text-zinc-500">APEX DIRECT</span>
+        </div>
+        <nav class="flex flex-col space-y-3 text-sm font-medium">
+          <button onclick="window.apexApp.jumpToAct(0); window.apexApp.closeMobileMenu();" class="text-left py-2 px-3 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-white/[0.04] transition-colors flex items-center justify-between">
+            <span>The Experience</span>
+            <span class="text-[10px] font-mono text-zinc-600">01</span>
+          </button>
+          <a href="#marque-directory-section" onclick="window.apexApp.closeMobileMenu()" class="py-2 px-3 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-white/[0.04] transition-colors flex items-center justify-between">
+            <span>Marques Directory</span>
+            <span class="text-[10px] font-mono text-zinc-600">02</span>
+          </a>
+          <a href="#monograph-section" onclick="window.apexApp.closeMobileMenu()" class="py-2 px-3 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-white/[0.04] transition-colors flex items-center justify-between">
+            <span>The 3D Monograph</span>
+            <span class="text-[10px] font-mono text-zinc-600">03</span>
+          </a>
+          <a href="#paint-section" onclick="window.apexApp.closeMobileMenu()" class="py-2 px-3 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-white/[0.04] transition-colors flex items-center justify-between">
+            <span>Color Studio</span>
+            <span class="text-[10px] font-mono text-zinc-600">04</span>
+          </a>
+          <a href="#packages-section" onclick="window.apexApp.closeMobileMenu()" class="py-2 px-3 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-white/[0.04] transition-colors flex items-center justify-between">
+            <span>Purchasing Plans</span>
+            <span class="text-[10px] font-mono text-zinc-600">05</span>
+          </a>
+          <a href="#reveal-gallery-section" onclick="window.apexApp.closeMobileMenu()" class="py-2 px-3 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-white/[0.04] transition-colors flex items-center justify-between">
+            <span>Visual Gallery</span>
+            <span class="text-[10px] font-mono text-zinc-600">06</span>
+          </a>
+          <a href="#purchase-section" onclick="window.apexApp.closeMobileMenu()" class="py-2 px-3 rounded-xl text-amber-300 hover:text-amber-200 bg-amber-500/10 border border-amber-500/25 transition-colors flex items-center justify-between">
+            <span>Direct Acquisition</span>
+            <span class="text-[10px] font-mono text-amber-400">&rarr;</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="pt-6 border-t border-white/[0.08] space-y-3">
+        <button type="button" onclick="window.apexApp.openConciergeModal(); window.apexApp.closeMobileMenu();" class="w-full py-2.5 rounded-xl bg-zinc-900 border border-amber-500/30 text-amber-400 hover:bg-amber-500/10 text-xs font-semibold uppercase tracking-wider transition-colors">
+          Private Concierge ⚜
+        </button>
+        <p class="text-[10px] text-zinc-500 text-center font-mono">
+          Certified International Escrow
+        </p>
+      </div>
+    </div>
+  </div>
 
   <!-- ====================================================================== -->
   <!-- 2. IMMERSIVE VERTICAL PINNED SCROLL THEATER (TURN-BY-TURN STORY)        -->

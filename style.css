@@ -43,6 +43,7 @@ html {
   color: #ffffff;
   font-family: var(--font-body);
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -81,6 +82,7 @@ body::before {
 section:not(#scroll-theater) {
   isolation: isolate;
   position: relative;
+  scroll-margin-top: 5.5rem;
 }
 
 section:not(#scroll-theater)::after {
@@ -198,9 +200,21 @@ html.lenis, html.lenis body {
 }
 
 @media (max-width: 1024px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
   .theater-bg-slide {
     background-size: cover;
     background-position: center 30%;
+  }
+
+  .flowing-menu-wrap,
+  .flowing-item,
+  .flowing-marquee__inner-wrap {
+    max-width: 100%;
+    contain: paint;
   }
 }
 
@@ -920,6 +934,7 @@ html.lenis, html.lenis body {
   top: 0;
   left: 0;
   overflow: hidden;
+  contain: paint;
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -1634,8 +1649,9 @@ select.atelier-select:focus,
 
 @media (max-width: 900px) {
   .-w-gallery {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) !important;
     row-gap: 2rem;
+    width: 100%;
   }
   .-w-gallery figure {
     grid-column: 1 / -1 !important;
@@ -1643,16 +1659,77 @@ select.atelier-select:focus,
     margin-top: 0 !important;
     aspect-ratio: 16 / 10 !important;
   }
+
+  .-w-gallery .gallery-header-cell {
+    grid-column: 1 / -1 !important;
+  }
 }
 
 /* ============================================================================ */
 /* MOBILE RESPONSIVE ENHANCEMENTS (SMARTPHONES 320PX - 640PX)                   */
 /* ============================================================================ */
 @media (max-width: 640px) {
+  section:not(#scroll-theater) {
+    scroll-margin-top: 5rem;
+  }
+
+  header {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  header > a {
+    min-width: 0;
+  }
+
+  header > a > div:last-child {
+    display: block;
+  }
+
+  header > a > div:last-child span:last-child {
+    display: none;
+  }
+
+  header > a > div:last-child span:first-child {
+    font-size: 1rem;
+  }
+
+  header .btn-primary-apex {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    min-height: 2.5rem;
+  }
+
+  header .currency-pill {
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    padding-left: 0.55rem;
+    padding-right: 0.55rem;
+  }
+
   /* Prevent horizontal scrollbars completely */
   html, body {
     overflow-x: hidden;
     width: 100%;
+  }
+
+  section:not(#scroll-theater) {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  #marque-directory-section,
+  footer {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  #monograph-section,
+  #paint-section,
+  #packages-section,
+  #purchase-section {
+    padding-top: 4.5rem !important;
+    padding-bottom: 4.5rem !important;
   }
 
   .-w-gallery figure img,
@@ -1691,8 +1768,16 @@ select.atelier-select:focus,
 
   /* Paint Studio mobile enhancements */
   .paint-preview-stage {
-    min-height: 200px;
+    min-height: clamp(220px, 68vw, 300px);
     border-radius: 1rem;
+  }
+
+  #paint-section .spotlight-card {
+    padding: 1rem !important;
+  }
+
+  #paint-section .paint-preview-stage {
+    margin-bottom: 1.25rem;
   }
 
   .swatch-circle {
@@ -1706,6 +1791,50 @@ select.atelier-select:focus,
   #form-package-select {
     font-size: 0.85rem !important;
     padding: 0.75rem 1rem;
+    min-height: 3rem;
+  }
+
+  #purchase-section .grid-cols-3,
+  .concierge-modal-card .grid-cols-2,
+  .concierge-modal-card .grid-cols-3 {
+    grid-template-columns: 1fr !important;
+  }
+
+  #purchase-section .spotlight-card {
+    padding: 1.25rem !important;
+  }
+
+  .book-container {
+    width: min(310px, calc(100vw - 2rem));
+    height: min(440px, calc((100vw - 2rem) * 1.42));
+  }
+
+  .book-container.open {
+    transform: translateX(0);
+  }
+
+  .monograph-stage {
+    min-height: min(580px, calc((100vw - 2rem) * 1.75));
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .monograph-stage + .mt-6 > div {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-radius: 1rem;
+  }
+
+  .car-select-pill,
+  .studio-mode-pill,
+  .monograph-ribbon-tab {
+    min-height: 2.75rem;
+  }
+
+  .swatch-circle {
+    min-width: 42px;
+    min-height: 42px;
   }
 
   /* Concierge modal padding */
@@ -1713,5 +1842,35 @@ select.atelier-select:focus,
     padding: 1.5rem 1.25rem;
     border-radius: 1.25rem;
     margin: 1rem;
+    max-height: calc(100dvh - 2rem);
+    overflow-y: auto;
+  }
+
+  /* Prevent auto-zoom on iOS when tapping inputs */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* Mobile Slide-Out Navigation Drawer */
+  .mobile-nav-drawer {
+    z-index: 9999;
+  }
+
+  .mobile-nav-drawer .mobile-nav-content {
+    animation: drawerSlideIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes drawerSlideIn {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
   }
 }
+

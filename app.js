@@ -1812,6 +1812,38 @@ acts.forEach((a, idx) => {
       }
     });
   }
+
+  // --------------------------------------------------------------------------
+  // 15. MOBILE NAVIGATION DRAWER
+  // --------------------------------------------------------------------------
+  toggleMobileMenu() {
+    const drawer = document.getElementById('mobile-nav-drawer');
+    const openIcon = document.querySelector('.menu-icon-open');
+    const closeIcon = document.querySelector('.menu-icon-close');
+    if (!drawer) return;
+
+    const isHidden = drawer.classList.contains('hidden');
+    if (isHidden) {
+      drawer.classList.remove('hidden');
+      if (openIcon) openIcon.classList.add('hidden');
+      if (closeIcon) closeIcon.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    } else {
+      this.closeMobileMenu();
+    }
+  }
+
+  closeMobileMenu() {
+    const drawer = document.getElementById('mobile-nav-drawer');
+    const openIcon = document.querySelector('.menu-icon-open');
+    const closeIcon = document.querySelector('.menu-icon-close');
+    if (!drawer) return;
+
+    drawer.classList.add('hidden');
+    if (openIcon) openIcon.classList.remove('hidden');
+    if (closeIcon) closeIcon.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
 }
 
 // Initialize on DOM load
