@@ -1,0 +1,1705 @@
+/* ============================================================================ */
+/* APEX AUTOMOTIVE DIRECT SALES — 2026 ULTRA-PREMIUM PRODUCTION STYLESHEET      */
+/* ============================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=Syne:wght@600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+:root {
+  --font-display: 'Syne', 'Space Grotesk', -apple-system, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+
+  --bg-main: #09090b;
+  --bg-surface: #121215;
+  --bg-card: #18181c;
+  --bg-card-hover: #222228;
+
+  --accent-amber: #d4af37;
+  --accent-gold: #f3e5ab;
+  --accent-sky: #38bdf8;
+  --accent-emerald: #10b981;
+
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --text-tertiary: #71717a;
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-active: rgba(245, 158, 11, 0.45);
+
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  background-color: #09090b;
+  color: #ffffff;
+  font-family: var(--font-body);
+  scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6,
+.font-display {
+  font-family: 'Syne', 'Space Grotesk', -apple-system, sans-serif;
+  letter-spacing: -0.03em;
+}
+
+body {
+  width: 100%;
+  overflow-x: hidden;
+  background-color: #09090b;
+  color: #ffffff;
+  line-height: 1.5;
+  background-image: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(245, 158, 11, 0.12), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(56, 189, 248, 0.05), transparent 70%);
+  background-attachment: fixed;
+}
+
+/* Private showroom atmosphere: quiet texture, sharp framing, and depth. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.26;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
+}
+
+section:not(#scroll-theater) {
+  isolation: isolate;
+  position: relative;
+}
+
+section:not(#scroll-theater)::after {
+  content: '';
+  position: absolute;
+  width: min(42vw, 600px);
+  height: min(42vw, 600px);
+  right: -24vw;
+  top: 12%;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.075), transparent 68%);
+  filter: blur(8px);
+}
+
+header {
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.17);
+}
+
+header nav a,
+header nav button {
+  position: relative;
+}
+
+header nav a::after,
+header nav button::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 3px;
+  width: 0;
+  height: 1px;
+  background: var(--accent-gold);
+  transform: translateX(-50%);
+  transition: width 0.25s ease;
+}
+
+header nav a:hover::after,
+header nav button:hover::after {
+  width: 42%;
+}
+
+::selection {
+  background: rgba(245, 158, 11, 0.35);
+  color: #ffffff;
+}
+
+/* Lenis Recommended */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ============================================================================ */
+/* IMMERSIVE VERTICAL PINNED SCROLL THEATER                                     */
+/* ============================================================================ */
+/* ============================================================================ */
+/* IMMERSIVE VERTICAL PINNED SCROLL THEATER (AEROSPACE CONTINUOUS SCRUB)        */
+/* ============================================================================ */
+#scroll-theater {
+  position: relative;
+  width: 100%;
+  height: 280vh;
+}
+
+#pinned-stage {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #09090b;
+}
+
+/* Pinned Background Media Layers */
+.theater-bg-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.theater-bg-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center right;
+  opacity: 0;
+  transform: scale(1);
+  will-change: opacity, transform;
+  filter: brightness(1.0) contrast(1.05);
+}
+
+#bg-act-3 {
+  background-size: cover;
+  background-position: center right;
+}
+
+@media (max-width: 1024px) {
+  .theater-bg-slide {
+    background-size: cover;
+    background-position: center 30%;
+  }
+}
+
+@media (max-width: 768px) {
+  .theater-bg-slide {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center 26%;
+    pointer-events: none !important;
+  }
+
+  .theater-bg-layer {
+    pointer-events: none !important;
+  }
+
+  .theater-vignette {
+    background: 
+      linear-gradient(180deg, rgba(9, 9, 11, 0.92) 0%, transparent 15%, transparent 48%, rgba(9, 9, 11, 0.95) 68%, #09090b 100%),
+      radial-gradient(ellipse at 50% 28%, transparent 50%, rgba(9, 9, 11, 0.55) 100%);
+    pointer-events: none !important;
+  }
+
+  .theater-hud-frame {
+    pointer-events: none !important;
+  }
+
+  .theater-rail {
+    display: none !important;
+  }
+
+  .theater-narrative-container {
+    padding: 0 1rem;
+    align-items: flex-end;
+    pointer-events: none !important;
+  }
+
+  .story-act {
+    left: 1rem !important;
+    right: 1rem !important;
+    top: auto !important;
+    bottom: 5.5rem !important;
+    transform: none !important;
+    max-width: none !important;
+    background: linear-gradient(180deg, transparent 0%, rgba(9,9,11,0.85) 30%, rgba(9,9,11,0.98) 100%);
+    padding: 1rem 0.5rem 0.75rem;
+    border-radius: 14px;
+    pointer-events: none !important;
+  }
+
+  #scroll-theater .story-act h1,
+  #scroll-theater .story-act h2 {
+    font-size: clamp(1.75rem, 6.5vw, 2.5rem) !important;
+    line-height: 1.05 !important;
+    margin-bottom: 0.25rem;
+    pointer-events: none;
+  }
+
+  #scroll-theater .story-act p {
+    font-size: 0.85rem !important;
+    line-height: 1.45 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  #scroll-theater .story-act .pt-4 {
+    padding-top: 0.25rem !important;
+    gap: 0.5rem !important;
+    pointer-events: none;
+  }
+
+  #scroll-theater .story-act .px-4.py-2 {
+    padding: 0.35rem 0.75rem !important;
+    font-size: 0.7rem !important;
+    pointer-events: none;
+  }
+
+  .story-act.active {
+    transform: none !important;
+    pointer-events: none !important;
+  }
+}
+
+.theater-bg-slide.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.theater-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: 
+    linear-gradient(90deg, #09090b 0%, rgba(9, 9, 11, 0.95) 28%, rgba(9, 9, 11, 0.6) 50%, rgba(9, 9, 11, 0.1) 75%, transparent 100%),
+    linear-gradient(180deg, rgba(9, 9, 11, 0.9) 0%, transparent 20%, transparent 80%, #09090b 100%);
+  pointer-events: none;
+}
+
+/* Futuristic Aerospace Telemetry HUD Frame */
+.theater-hud-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 25;
+}
+
+/* Soundless Frequency Equalizer Bars */
+.eq-bar {
+  width: 3px;
+  background: #f59e0b;
+  border-radius: 9999px;
+  animation: eqPulse 1.2s ease-in-out infinite alternate;
+}
+
+.eq-bar:nth-child(2) { animation-delay: 0.1s; animation-duration: 0.9s; }
+.eq-bar:nth-child(3) { animation-delay: 0.3s; animation-duration: 1.4s; }
+.eq-bar:nth-child(4) { animation-delay: 0.15s; animation-duration: 1.1s; }
+.eq-bar:nth-child(5) { animation-delay: 0.4s; animation-duration: 0.8s; }
+.eq-bar:nth-child(6) { animation-delay: 0.25s; animation-duration: 1.3s; }
+.eq-bar:nth-child(7) { animation-delay: 0.05s; animation-duration: 1.0s; }
+.eq-bar:nth-child(8) { animation-delay: 0.35s; animation-duration: 1.2s; }
+
+@keyframes eqPulse {
+  0% { transform: scaleY(0.3); opacity: 0.4; }
+  100% { transform: scaleY(1.0); opacity: 1; }
+}
+
+/* Foreground Narrative Story Acts - Minimalist Luxury Editorial Layout */
+.theater-narrative-container {
+  position: relative;
+  z-index: 20;
+  width: 100%;
+  max-width: 1500px;
+  height: 100%;
+  padding: 6rem 3rem 6rem;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.story-act {
+  position: absolute;
+  left: 3rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(580px, 42vw);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  opacity: 0;
+  will-change: opacity, transform;
+  pointer-events: none;
+}
+
+#scroll-theater .story-act h1,
+#scroll-theater .story-act h2 {
+  font-size: clamp(2.4rem, 4.2vw, 4.8rem) !important;
+  line-height: 0.95 !important;
+  letter-spacing: -0.035em !important;
+  word-break: keep-all;
+  white-space: normal;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.85);
+}
+
+#scroll-theater .story-act > div {
+  gap: 1.25rem;
+}
+
+#scroll-theater .story-act p {
+  font-size: clamp(0.95rem, 1.25vw, 1.15rem) !important;
+  line-height: 1.6;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9);
+  color: #e4e4e7;
+}
+
+.story-act.active {
+  opacity: 1;
+  transform: translateY(-50%);
+  pointer-events: auto;
+}
+
+@media (min-width: 1280px) {
+  .story-act {
+    left: 4.5rem;
+  }
+}
+
+/* Side Progress Rail with Live Continuous Glowing Fill */
+.theater-rail {
+  position: absolute;
+  right: 2.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(9, 9, 11, 0.75);
+  padding: 1.25rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.theater-rail-track {
+  position: absolute;
+  top: 48px;
+  bottom: 48px;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  z-index: 1;
+}
+
+.theater-rail-fill {
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(180deg, #fbbf24, #f59e0b);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.8);
+  border-radius: 9999px;
+  transition: height 0.1s linear;
+}
+
+.theater-dot {
+  position: relative;
+  z-index: 2;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: 2px solid #09090b;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.theater-dot:hover {
+  background: #ffffff;
+  transform: scale(1.3);
+}
+
+.theater-dot.active {
+  width: 12px;
+  height: 28px;
+  border-radius: 9999px;
+  background: #f59e0b;
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.9);
+}
+
+/* ============================================================================ */
+/* ORIGINKIT SPOTLIGHT CARDS                                                    */
+/* ============================================================================ */
+.spotlight-card {
+  position: relative;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  transition: border-color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    650px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(245, 158, 11, 0.12),
+    transparent 45%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+.spotlight-card:hover {
+  border-color: rgba(245, 158, 11, 0.35);
+  box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.6), 0 0 30px -15px rgba(245, 158, 11, 0.2);
+}
+
+.spotlight-card,
+.package-card,
+.vault-card {
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.035), transparent 34%);
+}
+
+/* ============================================================================ */
+/* INFINITE MARQUEE TICKER                                                      */
+/* ============================================================================ */
+.marquee-wrapper {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.marquee-content {
+  display: flex;
+  white-space: nowrap;
+  gap: 3rem;
+  animation: marquee-scroll 32s linear infinite;
+}
+
+.marquee-content:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ============================================================================ */
+/* 3D COVERFLOW VAULT (PROPERLY FITTED 16:10 CARDS)                             */
+/* ============================================================================ */
+.vault-viewport {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  width: 100%;
+  overflow: hidden;
+  padding: 2.5rem 0;
+}
+
+.vault-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.75rem;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vault-card {
+  position: relative;
+  flex: 0 0 min(300px, 82vw);
+  max-width: 440px;
+  border-radius: 1.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  cursor: pointer;
+  transform-origin: center center;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .vault-card {
+    flex: 0 0 420px;
+  }
+}
+
+.vault-card.active {
+  transform: scale(1.05) translateZ(50px);
+  border-color: var(--accent-amber);
+  box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.25), 0 0 30px rgba(245, 158, 11, 0.15);
+  z-index: 10;
+}
+
+.vault-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(125deg, rgba(255,255,255,0.14), transparent 22%, transparent 76%, rgba(212,175,55,0.1));
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.vault-card.active::after,
+.vault-card:hover::after { opacity: 1; }
+
+.vault-card.prev {
+  transform: scale(0.92) rotateY(18deg) translateZ(-40px);
+  opacity: 0.65;
+}
+
+.vault-card.next {
+  transform: scale(0.92) rotateY(-18deg) translateZ(-40px);
+  opacity: 0.65;
+}
+
+.vault-card.hidden-far {
+  display: none;
+}
+
+/* Properly fitted 16:9 vehicle showroom pedestal frame (Zero cropping) */
+.vault-img-container {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 65%, rgba(255, 255, 255, 0.08) 0%, rgba(18, 18, 22, 0.95) 60%, #09090b 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 1.5rem;
+}
+
+.vault-img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.95));
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vault-card:hover .vault-img {
+  transform: translateY(-4px) scale(1.06);
+}
+
+/* ============================================================================ */
+/* HEAD-TO-HEAD STAT BARS                                                       */
+/* ============================================================================ */
+.stat-bar-container {
+  height: 8px;
+  background: #27272a;
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.stat-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================================================ */
+/* REAL WORKING COLOR CONFIGURATOR                                              */
+/* ============================================================================ */
+.paint-preview-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 220px;
+  max-height: 540px;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background: #09090b;
+}
+
+@media (min-width: 640px) {
+  .paint-preview-stage {
+    min-height: 360px;
+    border-radius: 1.5rem;
+  }
+}
+
+.paint-display-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s ease;
+  will-change: opacity, transform;
+}
+
+.swatch-circle {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+.swatch-circle:hover {
+  transform: translateY(-2px) scale(1.12);
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+}
+
+.swatch-circle.active {
+  border-color: #ffffff;
+  transform: translateY(-2px) scale(1.18);
+  box-shadow: 0 0 22px rgba(245, 158, 11, 0.8), 0 0 0 2px #f59e0b;
+}
+
+.swatch-circle .swatch-check {
+  display: none;
+  width: 16px;
+  height: 16px;
+  color: #ffffff;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+}
+
+.swatch-circle[data-key="yellow"] .swatch-check,
+.swatch-circle[data-key="white"] .swatch-check,
+.swatch-circle[data-key="silver"] .swatch-check {
+  color: #09090b;
+  filter: none;
+}
+
+.swatch-circle.active .swatch-check {
+  display: block;
+}
+
+/* ============================================================================ */
+/* CABIN AMBIENT LIGHTING GLOW                                                  */
+/* ============================================================================ */
+.cabin-glow {
+  transition: all 0.6s ease;
+}
+
+.cabin-glow.amber {
+  box-shadow: inset 0 0 80px rgba(245, 158, 11, 0.35);
+}
+
+.cabin-glow.blue {
+  box-shadow: inset 0 0 80px rgba(56, 189, 248, 0.4);
+}
+
+.cabin-glow.crimson {
+  box-shadow: inset 0 0 80px rgba(239, 68, 68, 0.4);
+}
+
+.cabin-glow.white {
+  box-shadow: inset 0 0 80px rgba(255, 255, 255, 0.35);
+}
+
+/* ============================================================================ */
+/* PURCHASING PACKAGES CARDS                                                    */
+/* ============================================================================ */
+.package-card {
+  position: relative;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.035), transparent 34%), var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.package-card:hover {
+  border-color: rgba(245, 158, 11, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+}
+
+.package-card.featured {
+  border-color: var(--accent-amber);
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.06) 0%, var(--bg-surface) 100%);
+  box-shadow: 0 20px 40px -10px rgba(245, 158, 11, 0.15);
+}
+
+/* ============================================================================ */
+/* MODERN BUTTONS & PILLS                                                       */
+/* ============================================================================ */
+.btn-primary-apex {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #000000;
+  font-weight: 700;
+  box-shadow: 0 8px 24px -6px rgba(245, 158, 11, 0.45);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary-apex:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -4px rgba(245, 158, 11, 0.6);
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+}
+
+.btn-primary-apex:active,
+.btn-secondary-apex:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Give the monograph a gallery plinth once its ribbon has been removed. */
+#monograph-section {
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.035), transparent 34%);
+}
+
+#monograph-section .monograph-stage {
+  margin-top: 1.5rem;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background: radial-gradient(ellipse at 50% 82%, rgba(212, 175, 55, 0.15), transparent 42%);
+}
+
+#monograph-section .monograph-stage::before {
+  content: 'PRIVATE ARCHIVE • VOLUME MMXXVI';
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(243, 229, 171, 0.52);
+  font: 600 9px/1 var(--font-body);
+  letter-spacing: 0.28em;
+  white-space: nowrap;
+}
+
+.btn-secondary-apex {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-secondary-apex:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(245, 158, 11, 0.4);
+  color: #ffffff;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* ============================================================================ */
+/* REACT BITS: FLOWING MENU COMPONENT                                           */
+/* ============================================================================ */
+.flowing-menu-wrap {
+  width: 100%;
+  overflow: hidden;
+  background: #0d0d11;
+  position: relative;
+}
+
+.flowing-menu {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.flowing-item {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: 86px;
+  height: 94px;
+  display: flex;
+  align-items: center;
+  background: #09090b;
+}
+
+.flowing-item:first-child {
+  border-top: none;
+}
+
+.flowing-item-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding: 0 1.5rem;
+  position: relative;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+  z-index: 1;
+}
+
+@media (min-width: 640px) {
+  .flowing-item-link {
+    padding: 0 2.5rem;
+  }
+}
+
+.flowing-item-link:hover {
+  color: inherit;
+}
+
+.flowing-marquee {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transform: translate3d(0, 101%, 0);
+  z-index: 2;
+}
+
+.flowing-marquee__inner-wrap {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.flowing-marquee__inner {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 100%;
+  width: max-content;
+  will-change: transform;
+}
+
+.flowing-marquee__part {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.flowing-marquee span {
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 1.5rem;
+  line-height: 1;
+  padding: 0 1rem;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 640px) {
+  .flowing-marquee span {
+    font-size: 1.75rem;
+    padding: 0 1.25rem;
+  }
+}
+
+.flowing-marquee__badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  margin: 0 1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.flowing-marquee__img {
+  width: 130px;
+  height: 52px;
+  margin: 0 1.25rem;
+  border-radius: 9999px;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+}
+
+@media (min-width: 640px) {
+  .flowing-marquee__img {
+    width: 160px;
+    height: 58px;
+    margin: 0 1.5rem;
+  }
+}
+
+/* ============================================================================ */
+/* ATELIER PROVENANCE & BESPOKE FINANCING CALCULATOR (STITCH ENHANCEMENTS)      */
+/* ============================================================================ */
+.atelier-input-range {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: #27272a;
+  border-radius: 9999px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.atelier-input-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: #f59e0b;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.6);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.atelier-input-range::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background: #fbbf24;
+}
+
+.provenance-node {
+  position: relative;
+  padding-left: 2rem;
+  border-left: 2px solid rgba(245, 158, 11, 0.3);
+}
+
+.provenance-node::before {
+  content: '';
+  position: absolute;
+  left: -7px;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: #f59e0b;
+  border: 2px solid #09090b;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.8);
+}
+
+.concierge-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(9, 9, 11, 0.85);
+  backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.concierge-modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.concierge-modal-card {
+  transform: translateY(20px) scale(0.96);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.concierge-modal-backdrop.active .concierge-modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.currency-pill.active {
+  background: #f59e0b;
+  color: #000000;
+  font-weight: 700;
+}
+
+/* ============================================================================ */
+/* BESPOKE 3D MONOGRAPH BOOK (INTERACTIVE 3D FOLIO ENGINE)                     */
+/* ============================================================================ */
+.monograph-stage {
+  perspective: 2500px;
+  position: relative;
+  width: 100%;
+  min-height: 580px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  padding: 2rem 1rem;
+}
+
+.book-container {
+  width: 310px;
+  height: 440px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+@media (min-width: 480px) {
+  .book-container {
+    width: 350px;
+    height: 490px;
+  }
+}
+
+@media (min-width: 640px) {
+  .book-container {
+    width: 390px;
+    height: 540px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .book-container {
+    width: 430px;
+    height: 580px;
+  }
+}
+
+.book-container.open {
+  transform: translateX(50%);
+}
+
+@media (max-width: 640px) {
+  .book-container.open {
+    transform: translateX(35%);
+  }
+
+  .page-archival {
+    padding: 1.25rem 1rem !important;
+  }
+
+  .page-archival::before {
+    inset: 6px !important;
+  }
+
+  .page-archival h4 {
+    font-size: 0.85rem !important;
+  }
+
+  .page-archival p {
+    font-size: 0.65rem !important;
+    line-height: 1.35 !important;
+  }
+}
+
+.book-shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  box-shadow: 0 30px 70px -10px rgba(0, 0, 0, 0.95), 0 0 30px rgba(212, 175, 55, 0.1);
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.book-leaf {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  will-change: transform, z-index;
+  transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.book-leaf.flipped {
+  transform: rotateY(-180deg);
+}
+
+.book-face {
+  position: absolute !important;
+  inset: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.35);
+}
+
+.book-face.front {
+  border-radius: 0 14px 14px 0;
+}
+
+.book-face.back {
+  transform: rotateY(180deg) translateZ(0.01px);
+  border-radius: 14px 0 0 14px;
+}
+
+.book-spine-gradient-front {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 16%;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.15) 45%, transparent 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.book-spine-gradient-back {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 16%;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.15) 45%, transparent 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Monograph Page Styling */
+.page-archival {
+  position: absolute !important;
+  inset: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-color: #121216;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2.25rem 2rem;
+}
+
+.page-archival::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  pointer-events: none;
+  border-radius: 6px;
+}
+
+.page-cover {
+  position: absolute !important;
+  inset: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: radial-gradient(circle at 50% 30%, #1c1b22 0%, #09090b 100%);
+  border: 2px solid rgba(212, 175, 55, 0.45);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 2rem;
+}  box-shadow: inset 0 0 60px rgba(0,0,0,0.85);
+}
+
+.page-cover::before {
+  content: '';
+  position: absolute;
+  inset: 14px;
+  border: 1.5px solid rgba(212, 175, 55, 0.5);
+  pointer-events: none;
+}
+
+.page-cover::after {
+  content: '';
+  position: absolute;
+  inset: 20px;
+  border: 0.5px solid rgba(212, 175, 55, 0.25);
+  pointer-events: none;
+}
+
+/* Multi-Car Color Studio Styles */
+.paint-preview-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background: #0d0d10;
+}
+
+.paint-display-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
+  background: radial-gradient(circle at 50% 50%, #181822 0%, #0a0a0d 100%);
+  transition: opacity 0.25s ease, filter 0.35s ease;
+}
+
+.paint-tint-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: color;
+  opacity: 0;
+  transition: background-color 0.35s ease, opacity 0.35s ease;
+}
+
+.paint-finish-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.paint-finish-overlay.metallic {
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+  background: radial-gradient(circle at 45% 35%, rgba(255,255,255,0.7) 0%, transparent 65%),
+              linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 50%, rgba(255,255,255,0.3) 100%);
+}
+
+.paint-finish-overlay.matte {
+  opacity: 0.5;
+  mix-blend-mode: soft-light;
+  background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.7) 100%);
+}
+
+.paint-finish-overlay.gloss {
+  opacity: 0.25;
+  mix-blend-mode: screen;
+  background: linear-gradient(120deg, transparent 38%, rgba(255,255,255,0.45) 44%, transparent 50%);
+}
+
+.car-select-pill {
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #141418;
+  color: #a1a1aa;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.car-select-pill:hover {
+  color: #ffffff;
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+.car-select-pill.active {
+  background: #d4af37;
+  color: #000000;
+  border-color: #d4af37;
+  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);
+}
+
+/* Monograph Marque Ribbon Navigation Tabs */
+.monograph-ribbon-tab {
+  padding: 0.5rem 1.1rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(20, 20, 26, 0.85);
+  color: #a1a1aa;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.monograph-ribbon-tab:hover {
+  color: #fbbf24;
+  border-color: rgba(212, 175, 55, 0.45);
+  background: rgba(30, 28, 38, 0.95);
+  transform: translateY(-1px);
+}
+
+.monograph-ribbon-tab.active {
+  background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+  color: #000000;
+  border-color: #f59e0b;
+  font-weight: 700;
+  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.45);
+}
+
+/* Color Studio Mode Switcher (Exterior / Cockpit Interior) */
+.studio-mode-pill {
+  padding: 0.45rem 1.15rem;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(18, 18, 24, 0.85);
+  color: #94a3b8;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.studio-mode-pill:hover {
+  color: #ffffff;
+  border-color: rgba(212, 175, 55, 0.5);
+}
+
+.studio-mode-pill.active {
+  background: #d4af37;
+  color: #09090b;
+  border-color: #d4af37;
+  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);
+}
+
+/* Bespoke Luxury Form Selects & Inputs */
+select.atelier-select,
+#duel-car-1,
+#duel-car-2,
+#calc-car-select,
+#purchase-car-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d4af37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.1em;
+  padding-right: 2.75rem !important;
+  cursor: pointer;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+select.atelier-select:focus,
+#duel-car-1:focus,
+#duel-car-2:focus,
+#calc-car-select:focus,
+#purchase-car-select:focus {
+  border-color: #d4af37 !important;
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.25) !important;
+}
+
+/* ============================================================================ */
+/* LUXURY ATELIER EDITORIAL GALLERY                                             */
+/* ============================================================================ */
+.stringtune-reveal-section {
+  position: relative;
+  width: 100%;
+  padding-top: 5rem;
+  padding-bottom: 7rem;
+  background: #09090b;
+}
+
+.-w-gallery {
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+  align-items: start;
+  column-gap: 1.5rem;
+  row-gap: 3rem;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 4rem;
+}
+
+.-w-gallery .gallery-header-cell {
+  grid-column-start: 1;
+  grid-column-end: 15;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1rem 3rem;
+}
+
+.-w-gallery figure {
+  overflow: hidden;
+  position: relative;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+  background: #111114;
+  cursor: pointer;
+  transform: translateZ(0);
+}
+
+/* StringTune Clip-Path Polygon & Scale Reveal (User Provided StringTune Timing & Polygon) */
+.-w-gallery figure img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  scale: 1.5;
+  opacity: 0;
+  clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+  transition:
+    scale 0.9s cubic-bezier(0.86, 0, 0.31, 1),
+    opacity 0.7s cubic-bezier(0.86, 0, 0.31, 1),
+    clip-path 0.9s cubic-bezier(0.86, 0, 0.31, 1);
+  will-change: scale, opacity, clip-path;
+}
+
+.-w-gallery figure.-inview img {
+  scale: 1;
+  opacity: 1;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+/* 3D Dynamic Hover Tilt & Elevation Glow */
+.-w-gallery figure:hover {
+  border-color: rgba(245, 158, 11, 0.7);
+  box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.95), 0 0 35px rgba(245, 158, 11, 0.3);
+  transform: translateY(-4px);
+}
+
+.-w-gallery figure:hover img {
+  scale: 1.05;
+}
+
+/* Subtle luxury sheen sweep on figure hover */
+.-w-gallery figure::after {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: -60%;
+  width: 220%;
+  height: 220%;
+  background: linear-gradient(
+    45deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.08) 48%,
+    rgba(251, 191, 36, 0.2) 50%,
+    rgba(255, 255, 255, 0.08) 52%,
+    transparent 60%
+  );
+  transform: rotate(25deg) translateY(-120%);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.-w-gallery figure:hover::after {
+  transform: rotate(25deg) translateY(120%);
+}
+
+.-w-gallery .gallery-caption {
+  position: absolute;
+  bottom: 0;
+  inset-x: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(9, 9, 12, 0.96) 65%);
+  padding: 1.5rem 1.5rem 1.15rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  pointer-events: none;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.-w-gallery .image-1 {
+  grid-row-start: 2;
+  grid-column-start: 2;
+  grid-column-end: 8;
+  aspect-ratio: 16 / 10;
+}
+
+.-w-gallery .image-2 {
+  grid-row-start: 2;
+  grid-column-start: 9;
+  grid-column-end: 14;
+  aspect-ratio: 4 / 3;
+}
+
+.-w-gallery .image-3 {
+  grid-row-start: 3;
+  grid-row-end: 4;
+  grid-column-start: 3;
+  grid-column-end: 9;
+  aspect-ratio: 16 / 10;
+}
+
+.-w-gallery .image-4 {
+  grid-row-start: 3;
+  grid-row-end: 4;
+  grid-column-start: 10;
+  grid-column-end: 14;
+  aspect-ratio: 1 / 1;
+  margin-top: 3rem;
+}
+
+.-w-gallery .image-5 {
+  grid-row-start: 4;
+  grid-column-start: 2;
+  grid-column-end: 6;
+  aspect-ratio: 4 / 5;
+}
+
+.-w-gallery .image-6 {
+  grid-row-start: 4;
+  grid-column-start: 7;
+  grid-column-end: 14;
+  aspect-ratio: 16 / 9;
+  align-self: center;
+}
+
+@media (max-width: 900px) {
+  .-w-gallery {
+    grid-template-columns: 1fr;
+    row-gap: 2rem;
+  }
+  .-w-gallery figure {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+    margin-top: 0 !important;
+    aspect-ratio: 16 / 10 !important;
+  }
+}
+
+/* ============================================================================ */
+/* MOBILE RESPONSIVE ENHANCEMENTS (SMARTPHONES 320PX - 640PX)                   */
+/* ============================================================================ */
+@media (max-width: 640px) {
+  /* Prevent horizontal scrollbars completely */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .-w-gallery figure img,
+  .-w-gallery figure.-inview img {
+    scale: 1;
+    opacity: 1;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+
+  /* Gallery mobile optimization */
+  .-w-gallery {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 2.5rem;
+    row-gap: 1.5rem;
+  }
+
+  .-w-gallery figure {
+    border-radius: 1rem;
+  }
+
+  .-w-gallery .gallery-caption {
+    padding: 1rem 1rem 0.85rem;
+  }
+
+  /* Flowing marquees touch friendly */
+  .flowing-item {
+    min-height: 72px;
+    height: 76px;
+  }
+
+  .flowing-item-link {
+    padding: 0 1rem;
+  }
+
+  /* Paint Studio mobile enhancements */
+  .paint-preview-stage {
+    min-height: 200px;
+    border-radius: 1rem;
+  }
+
+  .swatch-circle {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Select and inputs touch-friendly */
+  select.atelier-select,
+  #form-vehicle-select,
+  #form-package-select {
+    font-size: 0.85rem !important;
+    padding: 0.75rem 1rem;
+  }
+
+  /* Concierge modal padding */
+  .concierge-modal-card {
+    padding: 1.5rem 1.25rem;
+    border-radius: 1.25rem;
+    margin: 1rem;
+  }
+}
