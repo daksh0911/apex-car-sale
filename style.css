@@ -206,9 +206,9 @@ html.lenis, html.lenis body {
 
 @media (max-width: 768px) {
   .theater-bg-slide {
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
-    background-position: center 26%;
+    background-position: center 32%;
     pointer-events: none !important;
   }
 
@@ -224,7 +224,7 @@ html.lenis, html.lenis body {
   }
 
   .theater-hud-frame {
-    pointer-events: none !important;
+    pointer-events: auto !important;
   }
 
   .theater-rail {
@@ -247,7 +247,7 @@ html.lenis, html.lenis body {
     background: linear-gradient(180deg, transparent 0%, rgba(9,9,11,0.85) 30%, rgba(9,9,11,0.98) 100%);
     padding: 1rem 0.5rem 0.75rem;
     border-radius: 14px;
-    pointer-events: none !important;
+    pointer-events: auto !important;
   }
 
   #scroll-theater .story-act h1,
@@ -271,18 +271,18 @@ html.lenis, html.lenis body {
   #scroll-theater .story-act .pt-4 {
     padding-top: 0.25rem !important;
     gap: 0.5rem !important;
-    pointer-events: none;
+    pointer-events: auto;
   }
 
   #scroll-theater .story-act .px-4.py-2 {
     padding: 0.35rem 0.75rem !important;
     font-size: 0.7rem !important;
-    pointer-events: none;
+    pointer-events: auto;
   }
 
   .story-act.active {
     transform: none !important;
-    pointer-events: none !important;
+    pointer-events: auto !important;
   }
 }
 
@@ -1174,6 +1174,7 @@ html.lenis, html.lenis body {
   transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   user-select: none;
+  touch-action: manipulation;
 }
 
 .book-leaf.flipped {
@@ -1301,6 +1302,17 @@ html.lenis, html.lenis body {
   object-position: center;
   background: radial-gradient(circle at 50% 50%, #181822 0%, #0a0a0d 100%);
   transition: opacity 0.25s ease, filter 0.35s ease;
+}
+
+@media (max-width: 640px) {
+  .paint-preview-stage {
+    min-height: clamp(220px, 62vw, 320px);
+  }
+
+  .paint-display-img {
+    object-fit: contain;
+    padding: 0.5rem;
+  }
 }
 
 .paint-tint-overlay {
