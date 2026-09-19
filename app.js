@@ -381,12 +381,8 @@ window.selectConfigCar = function(carId) {
   const label = document.getElementById('paint-car-label');
   if (label) label.textContent = carData.name;
 
-  if (window.apexApp && window.apexApp.studioMode === 'interior') {
-    window.setStudioMode('interior');
-  } else {
-    const currentColor = (window.apexApp && window.apexApp.currentColorKey) || 'yellow';
-    window.applyCarColor(currentColor);
-  }
+  const currentColor = (window.apexApp && window.apexApp.currentColorKey) || 'yellow';
+  window.applyCarColor(currentColor);
 };
 
 // Global Studio Mode Switcher: Exterior Paint vs Cockpit Interior
@@ -670,9 +666,9 @@ class ApexSalesApp {
   // LENIS SMOOTH INERTIA SCROLL
   // --------------------------------------------------------------------------
   initLenis() {
-    // On mobile devices and touch screens, native momentum scrolling is smoother,
-    // prevents touch-locking, and ensures 100% responsiveness without gesture hijacking.
-    const isMobileDevice = window.innerWidth <= 768 || ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    // On mobile devices, native momentum scrolling is smoother.
+    // On PC / desktop (including touch laptops), Lenis provides buttery smooth scrolling.
+    const isMobileDevice = window.innerWidth <= 768;
     if (isMobileDevice) {
       // Allow native browser touch physics
       window.lenis = null;
@@ -712,8 +708,7 @@ class ApexSalesApp {
   initScrollTheater() {
     // Mobile uses a stable, tap-controlled hero instead of a pinned scroll
     // timeline, which avoids scroll traps and large dead zones on phones.
-    if (window.innerWidth <= 768 || ('ontouchstart' in window) || navigator.maxTouchPoints > 0) return;
-    const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+    const isMobile = window.innerWidth <= 768;
 
     if (isMobile) {
       // ---- Mobile Theater: swipe to switch acts ----
@@ -888,7 +883,7 @@ acts.forEach((a, idx) => {
     this.setAct(actIdx);
 
     // On mobile, theater is a single-screen hero — no scroll calculation needed
-    const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+    const isMobile = window.innerWidth <= 768;
     if (isMobile) return;
 
     const theater = document.getElementById('scroll-theater');
@@ -1669,32 +1664,17 @@ acts.forEach((a, idx) => {
     this.monographTotalLeaves = 10;
     this.monographCurrentLeaf = 0;
 
-    // An open spread shows the back of the preceding leaf on the left and
-    // the next leaf's front on the right.  Move each cockpit page back one
-    // leaf so that the two visible pages always describe the same vehicle.
-    // Without this, a car's interior was displayed beside the following
-    // car's exterior (for example, the SF90 cockpit beside the 911 GT3).
-    const archiveBackPage = document.querySelector('#book-leaf-0 .book-face.back');
-    const archiveBackMarkup = archiveBackPage ? archiveBackPage.innerHTML : '';
-    const cockpitPageMarkup = [];
-
+    // Order monograph pages: For each supercar (Leaves 1-8):
+    // FRONT = Cockpit Interior (comes FIRST when book is opened)
+    // BACK  = Exterior Car Photo (comes next as the page turns)
     for (let leafIndex = 1; leafIndex <= 8; leafIndex++) {
-      const cockpitBackPage = document.querySelector(`#book-leaf-${leafIndex} .book-face.back`);
-      cockpitPageMarkup.push(cockpitBackPage ? cockpitBackPage.innerHTML : '');
-    }
-
-    for (let leafIndex = 0; leafIndex < cockpitPageMarkup.length; leafIndex++) {
-      const precedingBackPage = document.querySelector(`#book-leaf-${leafIndex} .book-face.back`);
-      if (precedingBackPage && cockpitPageMarkup[leafIndex]) {
-        precedingBackPage.innerHTML = cockpitPageMarkup[leafIndex];
+      const frontFace = document.querySelector(`#book-leaf-${leafIndex} .book-face.front`);
+      const backFace = document.querySelector(`#book-leaf-${leafIndex} .book-face.back`);
+      if (frontFace && backFace) {
+        const temp = frontFace.innerHTML;
+        frontFace.innerHTML = backFace.innerHTML;
+        backFace.innerHTML = temp;
       }
-    }
-
-    // Keep the archive page available for the closing dossier spread rather
-    // than showing the Daytona cockpit twice.
-    const closingBackPage = document.querySelector('#book-leaf-8 .book-face.back');
-    if (closingBackPage && archiveBackMarkup) {
-      closingBackPage.innerHTML = archiveBackMarkup;
     }
 
     for (let i = 0; i < this.monographTotalLeaves; i++) {

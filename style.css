@@ -1831,7 +1831,8 @@ select.atelier-select:focus,
     height: 100%;
     padding: 3.5rem 0.5rem 3.5rem;
     object-fit: contain;
-    background: radial-gradient(ellipse at 50% 55%, #181822 0%, #09090c 75%);
+    background: #09090c;
+    object-position: center bottom;
     z-index: 1;
   }
 
@@ -1944,9 +1945,10 @@ select.atelier-select:focus,
   }
 
   .book-leaf.flipped {
-    transform: rotateY(-180deg);
+    transform: rotateY(-180deg) translateZ(-2px);
     pointer-events: none;
-    opacity: 0.15;
+    opacity: 0 !important;
+    visibility: hidden;
   }
 
   /* Folio navigation: larger touch targets */
