@@ -219,6 +219,15 @@ html.lenis, html.lenis body {
 }
 
 @media (max-width: 768px) {
+  #scroll-theater {
+    height: 100svh;
+  }
+
+  #pinned-stage {
+    position: relative;
+    height: 100svh;
+  }
+
   .theater-bg-slide {
     background-size: cover;
     background-repeat: no-repeat;
@@ -262,6 +271,11 @@ html.lenis, html.lenis body {
     padding: 1rem 0.5rem 0.75rem;
     border-radius: 14px;
     pointer-events: auto !important;
+    transition: opacity 0.4s ease;
+  }
+
+  .theater-bg-slide {
+    transition: opacity 0.5s ease;
   }
 
   #scroll-theater .story-act h1,
@@ -1150,7 +1164,7 @@ html.lenis, html.lenis body {
 
 @media (max-width: 640px) {
   .book-container.open {
-    transform: translateX(35%);
+    transform: translateX(28%);
   }
 
   .page-archival {
@@ -1168,6 +1182,23 @@ html.lenis, html.lenis body {
   .page-archival p {
     font-size: 0.65rem !important;
     line-height: 1.35 !important;
+  }
+
+  .page-cover {
+    padding: 1.5rem 1rem !important;
+  }
+
+  .page-cover h3 {
+    font-size: 1.25rem !important;
+  }
+
+  .page-cover h3 span {
+    font-size: 0.85rem !important;
+  }
+
+  .page-archival img {
+    max-height: 45% !important;
+    object-fit: contain;
   }
 }
 
@@ -1724,6 +1755,15 @@ select.atelier-select:focus,
     padding-right: 0 !important;
   }
 
+  #marque-directory-section {
+    padding-top: 2.5rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  #marque-directory-section > div:first-child {
+    margin-bottom: 2rem !important;
+  }
+
   #monograph-section,
   #paint-section,
   #packages-section,
@@ -1768,8 +1808,67 @@ select.atelier-select:focus,
 
   /* Paint Studio mobile enhancements */
   .paint-preview-stage {
-    min-height: clamp(220px, 68vw, 300px);
+    min-height: 25rem;
+    aspect-ratio: auto;
     border-radius: 1rem;
+  }
+
+  #paint-stage-wrapper {
+    padding: 0;
+  }
+
+  #paint-stage-wrapper .paint-display-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 6rem 0.5rem 7rem;
+    object-fit: contain;
+    z-index: 1;
+  }
+
+  #paint-stage-wrapper > .absolute {
+    z-index: 3;
+  }
+
+  #paint-stage-wrapper > .absolute.top-6.left-6 {
+    top: 0.75rem;
+    left: 0.75rem;
+    right: 0.75rem;
+    width: auto;
+    justify-content: center;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  #paint-stage-wrapper > .absolute.top-6.right-6 {
+    top: 3.75rem;
+    left: 0.75rem;
+    right: 0.75rem;
+    justify-content: center;
+  }
+
+  #paint-stage-wrapper > .absolute.bottom-6.left-6 {
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    padding: 0.65rem 0.8rem;
+    text-align: center;
+  }
+
+  #paint-stage-wrapper > .absolute.bottom-6.left-6 #paint-display-name {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1rem;
+  }
+
+  #paint-stage-wrapper .studio-mode-pill {
+    min-height: 2.5rem;
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
+    font-size: 0.62rem;
   }
 
   #paint-section .spotlight-card {
@@ -1805,20 +1904,30 @@ select.atelier-select:focus,
   }
 
   .book-container {
-    width: min(310px, calc(100vw - 2rem));
-    height: min(440px, calc((100vw - 2rem) * 1.42));
+    width: min(280px, calc(100vw - 3rem));
+    height: min(400px, calc((100vw - 3rem) * 1.42));
   }
 
   .book-container.open {
-    transform: translateX(0);
+    transform: translateX(28%);
   }
 
   .monograph-stage {
-    min-height: min(580px, calc((100vw - 2rem) * 1.75));
-    padding-left: 0;
-    padding-right: 0;
+    overflow: visible;
+    min-height: min(520px, calc((100vw - 2rem) * 1.6));
+    padding: 1.5rem 0.5rem;
   }
 
+  /* DO NOT override transform-origin — must stay left center for 3D flip */
+  .book-leaf {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .book-leaf.flipped {
+    transform: rotateY(-180deg);
+  }
+
+  /* Folio navigation: larger touch targets */
   .monograph-stage + .mt-6 > div {
     max-width: 100%;
     overflow-x: auto;
@@ -1826,10 +1935,29 @@ select.atelier-select:focus,
     border-radius: 1rem;
   }
 
+  .monograph-stage + .mt-6 button {
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  #monograph-page-counter {
+    font-size: 0.65rem;
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .car-select-pill,
   .studio-mode-pill,
   .monograph-ribbon-tab {
     min-height: 2.75rem;
+  }
+
+  /* Monograph section description - hide on very small screens */
+  #monograph-section .text-center p {
+    font-size: 0.75rem;
+    line-height: 1.4;
   }
 
   .swatch-circle {

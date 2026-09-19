@@ -710,6 +710,38 @@ class ApexSalesApp {
   // IMMERSIVE VERTICAL PINNED SCROLL THEATER (CONTINUOUS AEROSPACE SCRUB)
   // --------------------------------------------------------------------------
   initScrollTheater() {
+    // Mobile uses a stable, tap-controlled hero instead of a pinned scroll
+    // timeline, which avoids scroll traps and large dead zones on phones.
+    const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+
+    if (isMobile) {
+      // ---- Mobile Theater: swipe to switch acts ----
+      const theater = document.getElementById('scroll-theater');
+      if (theater) {
+        let theaterSwipeX = 0;
+        let theaterSwipeY = 0;
+
+        theater.addEventListener('touchstart', (e) => {
+          theaterSwipeX = e.changedTouches[0].clientX;
+          theaterSwipeY = e.changedTouches[0].clientY;
+        }, { passive: true });
+
+        theater.addEventListener('touchend', (e) => {
+          const dx = e.changedTouches[0].clientX - theaterSwipeX;
+          const dy = e.changedTouches[0].clientY - theaterSwipeY;
+
+          if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+            if (dx < 0) {
+              this.nextAct();
+            } else {
+              this.prevAct();
+            }
+          }
+        }, { passive: true });
+      }
+      return;
+    }
+
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
     gsap.registerPlugin(ScrollTrigger);
@@ -853,6 +885,10 @@ acts.forEach((a, idx) => {
 
   jumpToAct(actIdx) {
     this.setAct(actIdx);
+
+    // On mobile, theater is a single-screen hero — no scroll calculation needed
+    const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+    if (isMobile) return;
 
     const theater = document.getElementById('scroll-theater');
     if (!theater) return;
@@ -1435,6 +1471,37 @@ acts.forEach((a, idx) => {
             .to(marquee, { y: edge === 'top' ? '-101%' : '101%' }, 0)
             .to(inner, { y: edge === 'top' ? '101%' : '-101%' }, 0);
         });
+
+        // Mobile touch: tap to show marquee, tap again or elsewhere to hide
+        let marqueeVisible = false;
+        item.addEventListener('touchstart', (ev) => {
+          // Close any other open marquees first
+          items.forEach((other) => {
+            if (other !== item) {
+              const otherMarquee = other.querySelector('.flowing-marquee');
+              const otherInner = other.querySelector('.flowing-marquee__inner');
+              if (otherMarquee && otherInner) {
+                gsap.to(otherMarquee, { y: '101%', duration: 0.3 });
+                gsap.to(otherInner, { y: '-101%', duration: 0.3 });
+              }
+              other._marqueeVisible = false;
+            }
+          });
+
+          if (!marqueeVisible) {
+            gsap.timeline({ defaults: animationDefaults })
+              .set(marquee, { y: '101%' }, 0)
+              .set(inner, { y: '-101%' }, 0)
+              .to([marquee, inner], { y: '0%' }, 0);
+            marqueeVisible = true;
+          } else {
+            gsap.timeline({ defaults: animationDefaults })
+              .to(marquee, { y: '101%' }, 0)
+              .to(inner, { y: '-101%' }, 0);
+            marqueeVisible = false;
+          }
+          item._marqueeVisible = marqueeVisible;
+        }, { passive: true });
       }
     });
   }
@@ -1655,6 +1722,33 @@ acts.forEach((a, idx) => {
     }
 
     this.updateMonographUI();
+
+    // ---- Mobile Touch Swipe for Monograph ----
+    const bookEl = document.getElementById('interactive-book');
+    if (bookEl) {
+      let swipeStartX = 0;
+      let swipeStartY = 0;
+
+      bookEl.addEventListener('touchstart', (e) => {
+        swipeStartX = e.changedTouches[0].clientX;
+        swipeStartY = e.changedTouches[0].clientY;
+      }, { passive: true });
+
+      bookEl.addEventListener('touchend', (e) => {
+        const dx = e.changedTouches[0].clientX - swipeStartX;
+        const dy = e.changedTouches[0].clientY - swipeStartY;
+
+        // Only act on horizontal swipes (> 50px) that are more horizontal than vertical
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+          e.preventDefault();
+          if (dx < 0) {
+            this.flipMonographForward();
+          } else {
+            this.flipMonographBackward();
+          }
+        }
+      }, { passive: false });
+    }
   }
 
   flipMonographForward() {
