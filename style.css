@@ -1952,8 +1952,9 @@ select.atelier-select:focus,
   .book-leaf.flipped {
     transform: rotateY(-180deg) translateZ(-2px);
     pointer-events: none;
-    opacity: 0 !important;
-    visibility: hidden;
+    opacity: 1 !important;
+    visibility: visible;
+    z-index: 30 !important;
   }
 
   /* Folio navigation: larger touch targets */
