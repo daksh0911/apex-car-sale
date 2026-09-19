@@ -619,6 +619,8 @@ class ApexSalesApp {
     this.initFlowingMenu();
     this.renderVault();
     this.initFinancingCalc();
+    this.initDuelArena();
+    this.initProvenance();
     this.initMonograph();
     this.initRevealGallery();
     this.setupKeyboard();
@@ -1054,6 +1056,7 @@ acts.forEach((a, idx) => {
     });
 
     this.renderInspector();
+    this.initProvenance();
   }
 
   prevVaultCard() {

@@ -586,6 +586,60 @@
   </section>
 
 
+  <!-- ====================================================================== -->
+  <!-- 4. INVENTORY VAULT & COMPARISON ARENA                                  -->
+  <!-- ====================================================================== -->
+  <section id="inventory-section" class="py-24 px-6 lg:px-12 max-w-7xl mx-auto border-t border-white/[0.08]">
+    <div class="max-w-3xl mb-10">
+      <span class="text-[11px] font-mono uppercase tracking-[0.2em] text-amber-400">OriginKit // Certified Inventory</span>
+      <h2 class="font-display font-extrabold text-3xl sm:text-5xl text-white mt-3">THE INVENTORY VAULT</h2>
+      <p class="text-sm text-zinc-400 mt-3">Browse the current allocation and open a complete technical sales dossier for any vehicle.</p>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2 mb-5">
+      <button type="button" class="vault-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-amber-500 text-black transition-all" data-type="all" onclick="window.apexApp.filterVault('all')">All Models</button>
+      <button type="button" class="vault-filter-btn px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-white transition-all" data-type="combustion" onclick="window.apexApp.filterVault('combustion')">Combustion</button>
+      <button type="button" class="vault-filter-btn px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-white transition-all" data-type="electric" onclick="window.apexApp.filterVault('electric')">Electric</button>
+      <span id="vault-counter" class="ml-auto text-xs font-mono text-zinc-500">01 / 08</span>
+    </div>
+
+    <div class="vault-viewport">
+      <div id="vault-track" class="vault-track"></div>
+    </div>
+    <div id="active-car-inspector" class="mt-8"></div>
+    <div class="flex items-center justify-center gap-3 mt-6">
+      <button type="button" class="btn-secondary-apex px-4 py-2 rounded-xl text-xs" onclick="window.apexApp.prevVaultCard()">Previous Vehicle</button>
+      <button type="button" class="btn-primary-apex px-4 py-2 rounded-xl text-xs" onclick="window.apexApp.nextVaultCard()">Next Vehicle</button>
+    </div>
+
+    <div class="mt-20 pt-16 border-t border-white/[0.08]">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-8">
+        <div>
+          <span class="text-[11px] font-mono uppercase tracking-[0.2em] text-sky-400">Telemetry // Head-to-Head</span>
+          <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-white mt-3">THE DUEL ARENA</h2>
+        </div>
+        <p class="text-sm text-zinc-400 max-w-md">Compare two certified allocations across power, acceleration, and top speed.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+        <select id="duel-select-a" class="atelier-select w-full px-4 py-3 rounded-xl bg-zinc-900 border border-white/[0.1] text-sm text-white" onchange="window.apexApp.updateDuel()"></select>
+        <select id="duel-select-b" class="atelier-select w-full px-4 py-3 rounded-xl bg-zinc-900 border border-white/[0.1] text-sm text-white" onchange="window.apexApp.updateDuel()"></select>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div id="duel-card-a"></div>
+        <div id="duel-card-b"></div>
+      </div>
+      <div id="duel-stats-container" class="space-y-5 mt-8"></div>
+    </div>
+
+    <div class="mt-20 pt-10 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+      <div>
+        <span class="text-[11px] font-mono uppercase tracking-[0.2em] text-amber-400">Certified Provenance Ledger</span>
+        <p class="text-sm text-zinc-400 mt-2">Current dossier chassis reference: <strong id="prov-chassis-id" class="text-white font-mono">Pending Selection</strong></p>
+      </div>
+      <button type="button" class="btn-secondary-apex px-5 py-3 rounded-xl text-xs uppercase tracking-wider" onclick="window.apexApp.downloadProvenancePDF()">Download Provenance Archive</button>
+    </div>
+  </section>
+
 
   <!-- ====================================================================== -->
   <!-- 4.25 BESPOKE ATELIER MONOGRAPH (3D INTERACTIVE COLLECTOR'S FOLIO)        -->
@@ -1293,6 +1347,29 @@
 
       </div>
 
+      <div class="mt-8 pt-6 border-t border-white/[0.08]">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <div>
+            <span class="block text-xs uppercase font-mono text-zinc-400 font-semibold">Atelier View</span>
+            <span class="text-[11px] text-zinc-500">Switch between the exterior finish and handcrafted cockpit dossier.</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button" class="studio-mode-pill active" data-mode="exterior" onclick="window.setStudioMode('exterior')">Exterior Paint</button>
+            <button type="button" class="studio-mode-pill" data-mode="interior" onclick="window.setStudioMode('interior')">Cockpit Interior</button>
+          </div>
+        </div>
+        <div id="interior-specs-grid" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+        <div id="cabin-preview-container" class="cabin-glow amber rounded-xl border border-white/[0.08] mt-4 px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+          <span id="ambient-name" class="font-display font-bold text-sm text-amber-400">Solar Amber (Warm Gold)</span>
+          <div class="flex flex-wrap gap-2">
+            <button type="button" class="px-3 py-1.5 rounded-lg bg-amber-500 text-black text-xs font-semibold" onclick="window.apexApp.setAmbientGlow('amber')">Amber</button>
+            <button type="button" class="px-3 py-1.5 rounded-lg bg-sky-500 text-black text-xs font-semibold" onclick="window.apexApp.setAmbientGlow('blue')">Ice Blue</button>
+            <button type="button" class="px-3 py-1.5 rounded-lg bg-red-500 text-white text-xs font-semibold" onclick="window.apexApp.setAmbientGlow('crimson')">Crimson</button>
+            <button type="button" class="px-3 py-1.5 rounded-lg bg-white text-black text-xs font-semibold" onclick="window.apexApp.setAmbientGlow('white')">Pure White</button>
+          </div>
+        </div>
+      </div>
+
     </div>
 
   </section>
@@ -1692,10 +1769,8 @@
   </div>
 
   <!-- Engine Scripts -->
-  <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/@fiddle-digital/string-tune@1.2.1/dist/index.js"></script>
   <script src="app.js?v=20260919_fix1"></script>
 
 </body>

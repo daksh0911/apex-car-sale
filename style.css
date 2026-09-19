@@ -43,7 +43,7 @@ html {
   color: #ffffff;
   font-family: var(--font-body);
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -54,6 +54,7 @@ h1, h2, h3, h4, h5, h6,
 
 body {
   width: 100%;
+  max-width: 100%;
   overflow-x: hidden;
   background-color: #09090b;
   color: #ffffff;
@@ -83,6 +84,7 @@ section:not(#scroll-theater) {
   isolation: isolate;
   position: relative;
   scroll-margin-top: 5.5rem;
+  overflow-x: clip;
 }
 
 section:not(#scroll-theater)::after {
