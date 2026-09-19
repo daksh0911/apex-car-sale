@@ -788,37 +788,51 @@ class ApexSalesApp {
           });
         }
 
-        // Smooth continuous cross-fade: active slide reaches 1, others fade out
+        // Smooth continuous cross-fade without dipping into black:
+        // Current slide stays solid underneath (or previous slide visible), next slide fades over it.
         slides.forEach((slide, idx) => {
           if (!slide) return;
-          const dist = Math.abs(actFloat - idx);
-          const opacity = Math.max(0, Math.min(1, 1 - dist));
-          slide.style.opacity = opacity.toFixed(3);
+          let opacity = 0;
+          if (actFloat >= idx && actFloat <= idx + 1) {
+            // Slide idx is the base or transitioning slide
+            opacity = 1;
+          } else if (actFloat < idx && actFloat >= idx - 1) {
+            // Slide idx is fading in from 0 to 1 over the previous slide
+            opacity = actFloat - (idx - 1);
+          } else if (idx === 0 && actFloat < 0) {
+            opacity = 1;
+          } else if (idx === slides.length - 1 && actFloat > idx) {
+            opacity = 1;
+          } else {
+            opacity = 0;
+          }
+          slide.style.opacity = Math.max(0, Math.min(1, opacity)).toFixed(3);
         });
 
-    // Smooth distinct visibility for story acts
-    acts.forEach((act, idx) => {
-      if (!act) return;
-      const dist = Math.abs(actFloat - idx);
-      let opacity = 0;
-      if (dist <= 0.35) {
-        opacity = 1;
-      } else if (dist < 0.75) {
-        opacity = 1 - (dist - 0.35) / 0.4;
+        // Smooth distinct visibility for story acts without dead black gaps
+        acts.forEach((act, idx) => {
+          if (!act) return;
+          const dist = Math.abs(actFloat - idx);
+          // Active around center, fades out linearly by dist = 0.65 with no dead zone
+          let opacity = 0;
+          if (dist <= 0.25) {
+            opacity = 1;
+          } else if (dist <= 0.65) {
+            opacity = 1 - (dist - 0.25) / 0.4;
+          }
+          const diff = actFloat - idx;
+          const translateY = -diff * 15;
+          act.style.opacity = opacity.toFixed(3);
+          act.style.visibility = opacity > 0.02 ? 'visible' : 'hidden';
+          if (window.innerWidth <= 768) {
+            act.style.transform = `translateY(${translateY.toFixed(1)}px)`;
+          } else {
+            act.style.transform = `translateY(calc(-50% + ${translateY.toFixed(1)}px))`;
+          }
+          act.style.pointerEvents = opacity > 0.4 ? 'auto' : 'none';
+        });
       }
-      const diff = actFloat - idx;
-      const translateY = -diff * 15;
-      act.style.opacity = opacity.toFixed(3);
-      act.style.visibility = opacity > 0.01 ? 'visible' : 'hidden';
-      if (window.innerWidth <= 768) {
-        act.style.transform = `translateY(${translateY.toFixed(1)}px)`;
-      } else {
-        act.style.transform = `translateY(calc(-50% + ${translateY.toFixed(1)}px))`;
-      }
-      act.style.pointerEvents = opacity > 0.5 ? 'auto' : 'none';
     });
-  }
-});
 
 // Interactive 3D Subtle Mouse Parallax
 window.addEventListener('mousemove', (e) => {
@@ -1663,19 +1677,6 @@ acts.forEach((a, idx) => {
   initMonograph() {
     this.monographTotalLeaves = 10;
     this.monographCurrentLeaf = 0;
-
-    // Order monograph pages: For each supercar (Leaves 1-8):
-    // FRONT = Cockpit Interior (comes FIRST when book is opened)
-    // BACK  = Exterior Car Photo (comes next as the page turns)
-    for (let leafIndex = 1; leafIndex <= 8; leafIndex++) {
-      const frontFace = document.querySelector(`#book-leaf-${leafIndex} .book-face.front`);
-      const backFace = document.querySelector(`#book-leaf-${leafIndex} .book-face.back`);
-      if (frontFace && backFace) {
-        const temp = frontFace.innerHTML;
-        frontFace.innerHTML = backFace.innerHTML;
-        backFace.innerHTML = temp;
-      }
-    }
 
     for (let i = 0; i < this.monographTotalLeaves; i++) {
       const leaf = document.getElementById(`book-leaf-${i}`);
