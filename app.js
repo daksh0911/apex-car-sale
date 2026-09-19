@@ -509,7 +509,11 @@ window.applyCarColor = function(colorKey) {
 
   if (img) {
     if (colorInfo.img) {
-      img.src = colorInfo.img;
+      if (carId === 'ferrari_sf90') {
+        renderFerrariSf90Color(colorKey, colorInfo, img);
+      } else {
+        img.src = colorInfo.img;
+      }
       img.style.filter = 'none';
       if (tint) tint.style.opacity = '0';
     } else {
@@ -587,6 +591,112 @@ window.setCaliperColor = function(caliperKey) {
     window.apexApp.currentCaliper = caliperKey;
   }
 };
+
+const ferrariSf90ColorCache = new Map();
+
+function renderFerrariSf90Color(colorKey, colorInfo, targetImage) {
+  if (colorKey === 'red') {
+    targetImage.src = 'ferrari_sf90_red.jpg';
+    return;
+  }
+
+  const cachedImage = ferrariSf90ColorCache.get(colorKey);
+  if (cachedImage) {
+    targetImage.src = cachedImage;
+    return;
+  }
+
+  const sourceImage = new Image();
+  sourceImage.decoding = 'async';
+  sourceImage.onload = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = sourceImage.naturalWidth;
+    canvas.height = sourceImage.naturalHeight;
+    const context = canvas.getContext('2d', { willReadFrequently: true });
+    if (!context) return;
+
+    context.drawImage(sourceImage, 0, 0);
+    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    const targetColor = colorInfo.tint || '#dc2626';
+    const targetRgb = targetColor.match(/[\da-f]{2}/gi).map(value => parseInt(value, 16) / 255);
+    const targetHsl = rgbToHsl(targetRgb[0], targetRgb[1], targetRgb[2]);
+    const mask = [
+      [0.10, 0.47], [0.14, 0.40], [0.27, 0.35], [0.42, 0.33],
+      [0.64, 0.35], [0.83, 0.42], [0.95, 0.53], [0.86, 0.72],
+      [0.22, 0.75], [0.12, 0.65]
+    ];
+
+    for (let y = 0; y < canvas.height; y++) {
+      for (let x = 0; x < canvas.width; x++) {
+        const normalizedPoint = [x / canvas.width, y / canvas.height];
+        if (!isPointInPolygon(normalizedPoint, mask)) continue;
+
+        const pixelIndex = (y * canvas.width + x) * 4;
+        const red = imageData.data[pixelIndex] / 255;
+        const green = imageData.data[pixelIndex + 1] / 255;
+        const blue = imageData.data[pixelIndex + 2] / 255;
+        if (red < green * 1.12 || red < blue * 1.12 || red < 0.18) continue;
+
+        const hsl = rgbToHsl(red, green, blue);
+        let lightness = hsl[2];
+        if (colorKey === 'black') lightness = Math.min(0.16, lightness * 0.42);
+        if (colorKey === 'white') lightness = Math.max(0.72, lightness);
+        if (colorKey === 'silver') lightness = Math.max(0.48, lightness);
+        const recolored = hslToRgb(targetHsl[0], colorKey === 'white' || colorKey === 'silver' ? 0.08 : targetHsl[1], lightness);
+        imageData.data[pixelIndex] = recolored[0] * 255;
+        imageData.data[pixelIndex + 1] = recolored[1] * 255;
+        imageData.data[pixelIndex + 2] = recolored[2] * 255;
+      }
+    }
+
+    context.putImageData(imageData, 0, 0);
+    const renderedImage = canvas.toDataURL('image/jpeg', 0.9);
+    ferrariSf90ColorCache.set(colorKey, renderedImage);
+    targetImage.src = renderedImage;
+  };
+  sourceImage.src = 'ferrari_sf90_red.jpg';
+}
+
+function isPointInPolygon(point, polygon) {
+  let inside = false;
+  for (let i = 0, previous = polygon.length - 1; i < polygon.length; previous = i++) {
+    const [x, y] = polygon[i];
+    const [previousX, previousY] = polygon[previous];
+    const intersects = ((y > point[1]) !== (previousY > point[1])) &&
+      (point[0] < ((previousX - x) * (point[1] - y)) / (previousY - y) + x);
+    if (intersects) inside = !inside;
+  }
+  return inside;
+}
+
+function rgbToHsl(red, green, blue) {
+  const max = Math.max(red, green, blue);
+  const min = Math.min(red, green, blue);
+  const lightness = (max + min) / 2;
+  if (max === min) return [0, 0, lightness];
+  const delta = max - min;
+  const saturation = lightness > 0.5 ? delta / (2 - max - min) : delta / (max + min);
+  let hue;
+  if (max === red) hue = (green - blue) / delta + (green < blue ? 6 : 0);
+  else if (max === green) hue = (blue - red) / delta + 2;
+  else hue = (red - green) / delta + 4;
+  return [hue / 6, saturation, lightness];
+}
+
+function hslToRgb(hue, saturation, lightness) {
+  if (saturation === 0) return [lightness, lightness, lightness];
+  const hueToRgb = (p, q, t) => {
+    if (t < 0) t += 1;
+    if (t > 1) t -= 1;
+    if (t < 1 / 6) return p + (q - p) * 6 * t;
+    if (t < 1 / 2) return q;
+    if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+    return p;
+  };
+  const q = lightness < 0.5 ? lightness * (1 + saturation) : lightness + saturation - lightness * saturation;
+  const p = 2 * lightness - q;
+  return [hueToRgb(p, q, hue + 1 / 3), hueToRgb(p, q, hue), hueToRgb(p, q, hue - 1 / 3)];
+}
 
 // ----------------------------------------------------------------------------
 // 3. MAIN APPLICATION CONTROLLER
