@@ -712,6 +712,7 @@ class ApexSalesApp {
   initScrollTheater() {
     // Mobile uses a stable, tap-controlled hero instead of a pinned scroll
     // timeline, which avoids scroll traps and large dead zones on phones.
+    if (window.innerWidth <= 768 || ('ontouchstart' in window) || navigator.maxTouchPoints > 0) return;
     const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
 
     if (isMobile) {
@@ -1743,8 +1744,8 @@ acts.forEach((a, idx) => {
         const dy = e.changedTouches[0].clientY - touchStartY;
         const dt = Date.now() - touchStartTime;
 
-        // 1. Horizontal Swipe (> 45px)
-        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+        // 1. Horizontal Swipe (> 40px)
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.2) {
           if (dx < 0) {
             this.flipMonographForward();
           } else {
@@ -1753,11 +1754,11 @@ acts.forEach((a, idx) => {
           return;
         }
 
-        // 2. Quick Tap (< 300ms, < 15px movement) on mobile fallback
+        // 2. Quick Tap (< 300ms, < 15px movement) on mobile
         if (dt < 300 && Math.abs(dx) < 15 && Math.abs(dy) < 15) {
           const rect = bookEl.getBoundingClientRect();
           const clickX = touchStartX - rect.left;
-          // Tapping left half of open book flips backward, right half flips forward
+          // Tapping left 40% of open book turns backward, remainder turns forward
           if (this.monographCurrentLeaf > 0 && clickX < rect.width * 0.4) {
             this.flipMonographBackward();
           } else {
