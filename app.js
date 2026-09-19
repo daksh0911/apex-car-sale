@@ -740,6 +740,10 @@ class ApexSalesApp {
       return;
     }
 
+    // Desktop uses explicit act controls as well. Avoid a second scroll-driven
+    // controller fighting setAct() and leaving the theater between states.
+    return;
+
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
     gsap.registerPlugin(ScrollTrigger);
