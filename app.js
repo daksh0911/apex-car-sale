@@ -1685,6 +1685,27 @@ acts.forEach((a, idx) => {
     this.monographTotalLeaves = 10;
     this.monographCurrentLeaf = 0;
 
+    const archiveBackPage = document.querySelector('#book-leaf-0 .book-face.back');
+    const archiveBackMarkup = archiveBackPage ? archiveBackPage.innerHTML : '';
+    const cockpitPageMarkup = [];
+
+    for (let leafIndex = 1; leafIndex <= 8; leafIndex++) {
+      const cockpitBackPage = document.querySelector(`#book-leaf-${leafIndex} .book-face.back`);
+      cockpitPageMarkup.push(cockpitBackPage ? cockpitBackPage.innerHTML : '');
+    }
+
+    for (let leafIndex = 0; leafIndex < cockpitPageMarkup.length; leafIndex++) {
+      const precedingBackPage = document.querySelector(`#book-leaf-${leafIndex} .book-face.back`);
+      if (precedingBackPage && cockpitPageMarkup[leafIndex]) {
+        precedingBackPage.innerHTML = cockpitPageMarkup[leafIndex];
+      }
+    }
+
+    const closingBackPage = document.querySelector('#book-leaf-8 .book-face.back');
+    if (closingBackPage && archiveBackMarkup) {
+      closingBackPage.innerHTML = archiveBackMarkup;
+    }
+
     for (let i = 0; i < this.monographTotalLeaves; i++) {
       const leaf = document.getElementById(`book-leaf-${i}`);
       if (leaf) {

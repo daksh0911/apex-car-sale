@@ -1261,57 +1261,6 @@
           </div>
         </div>
 
-        <!-- Finish Types & Caliper Selectors (5 cols) -->
-        <div class="lg:col-span-5 space-y-4">
-          <div>
-            <span class="block text-xs uppercase font-mono text-zinc-400 mb-2 font-semibold">Finish Clearcoat</span>
-            <div class="grid grid-cols-3 gap-2">
-              <button type="button" onclick="window.setFinishType('gloss')" id="btn-finish-gloss" class="px-3 py-2 rounded-xl bg-amber-500 text-black font-semibold text-xs transition-colors">
-                Gloss
-              </button>
-              <button type="button" onclick="window.setFinishType('metallic')" id="btn-finish-metallic" class="px-3 py-2 rounded-xl bg-zinc-900 text-zinc-300 hover:text-white font-semibold text-xs border border-white/[0.08] transition-colors">
-                Metallic
-              </button>
-              <button type="button" onclick="window.setFinishType('matte')" id="btn-finish-matte" class="px-3 py-2 rounded-xl bg-zinc-900 text-zinc-300 hover:text-white font-semibold text-xs border border-white/[0.08] transition-colors">
-                Satin Matte
-              </button>
-            </div>
-          </div>
-
-          <div>
-            <span class="block text-xs uppercase font-mono text-zinc-400 mb-2 font-semibold">Brake Caliper Color</span>
-            <div class="flex items-center space-x-2">
-              <button type="button" onclick="window.setCaliperColor('yellow')" class="px-3 py-1.5 rounded-lg bg-zinc-900 border border-white/[0.1] text-amber-400 text-xs font-semibold hover:border-amber-400 transition-colors">Yellow</button>
-              <button type="button" onclick="window.setCaliperColor('red')" class="px-3 py-1.5 rounded-lg bg-zinc-900 border border-white/[0.1] text-red-500 text-xs font-semibold hover:border-red-500 transition-colors">Red</button>
-              <button type="button" onclick="window.setCaliperColor('acid_green')" class="px-3 py-1.5 rounded-lg bg-zinc-900 border border-white/[0.1] text-emerald-400 text-xs font-semibold hover:border-emerald-400 transition-colors">Acid Green</button>
-              <button type="button" onclick="window.setCaliperColor('black')" class="px-3 py-1.5 rounded-lg bg-zinc-900 border border-white/[0.1] text-zinc-400 text-xs font-semibold hover:border-white transition-colors">Black</button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="mt-8 pt-6 border-t border-white/[0.08]">
-        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-          <div>
-            <span class="block text-xs uppercase font-mono text-zinc-400 font-semibold">Atelier View</span>
-            <span class="text-[11px] text-zinc-500">Switch between the exterior finish and handcrafted cockpit dossier.</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <button type="button" class="studio-mode-pill active" data-mode="exterior" onclick="window.setStudioMode('exterior')">Exterior Paint</button>
-            <button type="button" class="studio-mode-pill" data-mode="interior" onclick="window.setStudioMode('interior')">Cockpit Interior</button>
-          </div>
-        </div>
-        <div id="interior-specs-grid" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
-        <div id="cabin-preview-container" class="cabin-glow amber rounded-xl border border-white/[0.08] mt-4 px-4 py-3 flex flex-wrap items-center justify-between gap-3">
-          <span id="ambient-name" class="font-display font-bold text-sm text-amber-400">Solar Amber (Warm Gold)</span>
-          <div class="flex flex-wrap gap-2">
-            <button type="button" class="px-3 py-1.5 rounded-lg bg-amber-500 text-black text-xs font-semibold" onclick="window.apexApp.setAmbientGlow('amber')">Amber</button>
-            <button type="button" class="px-3 py-1.5 rounded-lg bg-sky-500 text-black text-xs font-semibold" onclick="window.apexApp.setAmbientGlow('blue')">Ice Blue</button>
-            <button type="button" class="px-3 py-1.5 rounded-lg bg-red-500 text-white text-xs font-semibold" onclick="window.apexApp.setAmbientGlow('crimson')">Crimson</button>
-            <button type="button" class="px-3 py-1.5 rounded-lg bg-white text-black text-xs font-semibold" onclick="window.apexApp.setAmbientGlow('white')">Pure White</button>
-          </div>
-        </div>
       </div>
 
     </div>
