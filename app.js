@@ -345,28 +345,22 @@ const MARQUE_COLOR_REGISTRY = {
   }
 };
 
-// Immediate background preloading of all studio paint images across all 8 marques
-if (typeof window !== 'undefined') {
-  Object.values(MARQUE_COLOR_REGISTRY).forEach(car => {
-    if (car.colors) {
-      Object.values(car.colors).forEach(item => {
-        if (item.img) {
-          const preloader = new Image();
-          preloader.src = item.img;
-        }
-      });
-    }
-    if (car.cockpitImg) {
-      const preloader = new Image();
-      preloader.src = car.cockpitImg;
-    }
-  });
-}
-
 // Global vehicle switcher in color studio
 window.selectConfigCar = function(carId) {
   const carData = MARQUE_COLOR_REGISTRY[carId];
   if (!carData) return;
+
+  if ('requestIdleCallback' in window && carData.colors) {
+    window.requestIdleCallback(() => {
+      Object.values(carData.colors).forEach(item => {
+        if (item.img) {
+          const preloader = new Image();
+          preloader.decoding = 'async';
+          preloader.src = item.img;
+        }
+      });
+    }, { timeout: 1500 });
+  }
 
   if (window.apexApp) {
     window.apexApp.configCarId = carId;
@@ -938,16 +932,25 @@ acts.forEach((a, idx) => {
   // ORIGINKIT SPOTLIGHT CURSOR TRACKING
   // --------------------------------------------------------------------------
   initSpotlights() {
+    if (!window.matchMedia('(pointer: fine)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let framePending = false;
+    let pointerX = 0;
+    let pointerY = 0;
     document.addEventListener('mousemove', (e) => {
-      const cards = document.querySelectorAll('.spotlight-card');
-      cards.forEach((card) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
+      pointerX = e.clientX;
+      pointerY = e.clientY;
+      if (framePending) return;
+      framePending = true;
+      requestAnimationFrame(() => {
+        document.querySelectorAll('.spotlight-card').forEach((card) => {
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty('--mouse-x', `${pointerX - rect.left}px`);
+          card.style.setProperty('--mouse-y', `${pointerY - rect.top}px`);
+        });
+        framePending = false;
       });
-    });
+    }, { passive: true });
   }
 
   // --------------------------------------------------------------------------
@@ -1428,6 +1431,7 @@ acts.forEach((a, idx) => {
   initFlowingMenu() {
     const items = document.querySelectorAll('.flowing-item');
     if (!items.length) return;
+    const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
 
     const distMetric = (x, y, x2, y2) => {
       const xDiff = x - x2;
@@ -1453,7 +1457,7 @@ acts.forEach((a, idx) => {
 
         // Continuous seamless marquee animation
         const firstPart = inner.querySelector('.flowing-marquee__part');
-        if (firstPart) {
+        if (firstPart && !isCoarsePointer) {
           const contentWidth = firstPart.offsetWidth || 500;
           const speed = parseFloat(item.getAttribute('data-speed')) || 16;
           gsap.to(inner, {
