@@ -1723,31 +1723,48 @@ acts.forEach((a, idx) => {
 
     this.updateMonographUI();
 
-    // ---- Mobile Touch Swipe for Monograph ----
+    // ---- Mobile Touch & Swipe Support for Monograph ----
     const bookEl = document.getElementById('interactive-book');
     if (bookEl) {
-      let swipeStartX = 0;
-      let swipeStartY = 0;
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchStartTime = 0;
 
       bookEl.addEventListener('touchstart', (e) => {
-        swipeStartX = e.changedTouches[0].clientX;
-        swipeStartY = e.changedTouches[0].clientY;
+        if (!e.changedTouches || !e.changedTouches[0]) return;
+        touchStartX = e.changedTouches[0].clientX;
+        touchStartY = e.changedTouches[0].clientY;
+        touchStartTime = Date.now();
       }, { passive: true });
 
       bookEl.addEventListener('touchend', (e) => {
-        const dx = e.changedTouches[0].clientX - swipeStartX;
-        const dy = e.changedTouches[0].clientY - swipeStartY;
+        if (!e.changedTouches || !e.changedTouches[0]) return;
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        const dy = e.changedTouches[0].clientY - touchStartY;
+        const dt = Date.now() - touchStartTime;
 
-        // Only act on horizontal swipes (> 50px) that are more horizontal than vertical
-        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
-          e.preventDefault();
+        // 1. Horizontal Swipe (> 45px)
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.3) {
           if (dx < 0) {
             this.flipMonographForward();
           } else {
             this.flipMonographBackward();
           }
+          return;
         }
-      }, { passive: false });
+
+        // 2. Quick Tap (< 300ms, < 15px movement) on mobile fallback
+        if (dt < 300 && Math.abs(dx) < 15 && Math.abs(dy) < 15) {
+          const rect = bookEl.getBoundingClientRect();
+          const clickX = touchStartX - rect.left;
+          // Tapping left half of open book flips backward, right half flips forward
+          if (this.monographCurrentLeaf > 0 && clickX < rect.width * 0.4) {
+            this.flipMonographBackward();
+          } else {
+            this.flipMonographForward();
+          }
+        }
+      }, { passive: true });
     }
   }
 

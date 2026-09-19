@@ -1906,6 +1906,7 @@ select.atelier-select:focus,
   .book-container {
     width: min(280px, calc(100vw - 3rem));
     height: min(400px, calc((100vw - 3rem) * 1.42));
+    touch-action: pan-y;
   }
 
   .book-container.open {
@@ -1916,11 +1917,14 @@ select.atelier-select:focus,
     overflow: visible;
     min-height: min(520px, calc((100vw - 2rem) * 1.6));
     padding: 1.5rem 0.5rem;
+    touch-action: pan-y;
   }
 
-  /* DO NOT override transform-origin — must stay left center for 3D flip */
+  /* Must keep transform-origin: left center for proper 3D hinge */
   .book-leaf {
+    transform-origin: left center !important;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    touch-action: pan-y;
   }
 
   .book-leaf.flipped {
